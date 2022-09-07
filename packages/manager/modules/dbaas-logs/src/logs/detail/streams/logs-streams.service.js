@@ -243,6 +243,7 @@ export default class LogsStreamsService {
         retentionId: stream.retentionId,
         title: stream.title,
         webSocketEnabled: stream.webSocketEnabled,
+        encryptionKeysIds: stream.encryptionKeysIds,
       },
     )
       .$promise.then((operation) => {
@@ -286,6 +287,7 @@ export default class LogsStreamsService {
         pauseIndexingOnMaxSize: stream.pauseIndexingOnMaxSize,
         title: stream.title,
         webSocketEnabled: stream.webSocketEnabled,
+        encryptionKeysIds: stream.encryptionKeysIds,
       },
     )
       .$promise.then((operation) => {
@@ -349,6 +351,7 @@ export default class LogsStreamsService {
         webSocketEnabled: true,
         indexingEnabled: true,
         indexingNotifyEnabled: true,
+        encryptionKeysIds: [],
       },
       loading: false,
     };
