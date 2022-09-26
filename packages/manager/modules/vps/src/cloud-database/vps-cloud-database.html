@@ -102,14 +102,15 @@
             </oui-action-menu-item>
         </oui-action-menu>
         <oui-datagrid-topbar>
-            <button
+            <a
                 class="oui-button oui-button_primary"
-                type="button"
-                data-ui-sref="vps.detail.cloud-database.order"
+                href="{{ $ctrl.cloudDatabasesHref }}"
+                rel="noopener"
+                target="_blank"
             >
                 <span aria-hidden="true" class="oui-icon oui-icon-add"></span>
                 <span data-translate="vps_tab_cloud_database_order"></span>
-            </button>
+            </a>
         </oui-datagrid-topbar>
     </oui-datagrid>
 </section>
