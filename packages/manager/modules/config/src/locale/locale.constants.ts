@@ -37,7 +37,7 @@ export const LANGUAGES: OVHLanguages = {
     },
   ],
   defaultLoc: 'fr_FR',
-  fallback: 'fr_FR',
+  fallback: 'en_GB',
   preferred: {
     en: {
       US: CountryCode.GB,

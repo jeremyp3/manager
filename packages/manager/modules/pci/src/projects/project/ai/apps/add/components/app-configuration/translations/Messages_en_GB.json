@@ -15,5 +15,14 @@
   "pci_app_add_privacy_settings_item_public_warning": "Please ensure that you take great care with sensitive data.",
   "pci_app_add_privacy_title": "App access rule",
   "pci_app_add_settings_port": "HTTP port",
-  "pci_app_add_settings_port_help": "The HTTP port your app is linked to."
+  "pci_app_add_settings_port_help": "The HTTP port your app is linked to.",
+  "pci_app_add_readiness_probe": "Readiness probe",
+  "pci_app_add_readiness_probe_description": "In order to detect when your application is ready to process HTTP requests, you can configurate a custom readiness probe (Kubernetes Readiness probe) with an API endpoint and a port.",
+  "pci_app_add_readiness_probe_switch_label": "Use a readiness probe",
+  "pci_app_add_readiness_probe_switch_enabled": "Readiness probe enabled",
+  "pci_app_add_readiness_probe_switch_disabled": "Readiness probe disabled",
+  "pci_app_add_readiness_probe_path_label": "API endpoint",
+  "pci_app_add_readiness_probe_path_help_text": "API endpoint of the readiness probe. Must return a 2XX or 3XX status",
+  "pci_app_add_readiness_probe_port_label": "Port",
+  "pci_app_add_readiness_probe_port_help_text": "Configurate a custom port por this API endpoint"
 }

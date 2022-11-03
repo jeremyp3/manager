@@ -1,0 +1,11 @@
+{
+  "pci_app_update_app_image_title": "Update Docker image",
+  "pci_app_update_app_image_submit_label": "Update",
+  "pci_app_update_app_image_cancel_label": "Cancel",
+  "pci_app_update_app_image_message": "You can update the Docker image of your application without interruption. Your current application configuration (scaling strategy, readiness probe) will not change.",
+  "pci_app_update_app_image_input_image_name_help_text": "Enter the path to your Docker image. This can be a public (GitHub, Gitlab, DockerHub, etc.) or private registry",
+  "pci_app_update_app_image_input_image_name_label": "Your Docker image path",
+  "pci_app_update_app_image_input_image_name_popover": "Images hosted on a private or public registry are accepted (GitHub, GitLab, DockerHub, etc.)",
+  "pci_app_update_app_image_success": "Your Docker image is being updated",
+  "pci_app_update_app_image_error": "An error occured while updating your Docker image {{appName}} : {{message}}"
+}

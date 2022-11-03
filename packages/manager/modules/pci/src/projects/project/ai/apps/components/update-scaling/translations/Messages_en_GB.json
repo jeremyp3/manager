@@ -1,0 +1,22 @@
+{
+  "pci_app_update_app_scaling_title": "Update scaling configuration",
+  "pci_app_update_app_scaling_submit_label": "Validate",
+  "pci_app_update_app_scaling_cancel_label": "Cancel",
+  "pci_app_update_app_scaling_description": "Select the best scaling strategy for your app: static scaling of your replicas, or configurate a minimum and a maximum of replicas to automatically scale your number of replicas with Autscaling",
+  "pci_app_update_app_scaling_description_link": "More information",
+  "pci_app_update_app_scaling_switch_label": "Strategy",
+  "pci_app_update_app_scaling_switch_label_enabled": "Autoscaling enabled",
+  "pci_app_update_app_scaling_switch_label_disabled": "Autoscaling disabled",
+  "pci_app_update_app_scaling_replicas": "Number of replicas",
+  "pci_app_update_app_scaling_replicas_help_text": "Deploy on at least 2 replicas for high-disponibility",
+  "pci_app_update_app_scaling_min_replicas": "Replicas min",
+  "pci_app_update_app_scaling_max_replicas": "Replicas max",
+  "pci_app_update_app_scaling_trigger_resource": "Watched resource",
+  "pci_app_update_app_scaling_trigger_resource_help_text": "Resource which will activate autoscaling",
+  "pci_app_update_app_scaling_trigger_threshold": "Resource trigger threshold (%)",
+  "pci_app_update_app_scaling_trigger_threshold_help_text": "Resource value, in percentage",
+  "pci_app_update_app_scaling_price_warning": "Total price is calculated with min replicas. Please note that autoscaling can increase the cost when active.",
+  "pci_app_update_app_scaling_resources_total": "Total deployment price",
+  "pci_app_update_app_scaling_success": "Your scaling strategy has been updated",
+  "pci_app_update_app_scaling_error": "An error occured while updating your app scaling strategy {{ appName }} : {{ message }}."
+}
