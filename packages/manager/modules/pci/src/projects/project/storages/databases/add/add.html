@@ -507,16 +507,6 @@
                                 ></span>
                             </div>
                         </div>
-                        <oui-button
-                            block
-                            on-click="$ctrl.trackAndGoToCommand()"
-                            class="mb-2 mt-2"
-                            icon-left="oui-icon-app-script_concept"
-                        >
-                            <span
-                                data-translate="pci_database_add_show_command"
-                            ></span>
-                        </oui-button>
                     </oui-tile-description>
                 </oui-tile-definition>
                 <oui-tile-definition>
@@ -565,6 +555,13 @@
                         ></span>
                     </div>
                 </oui-button>
+                <div class="mt-2">
+                    <a
+                        href=""
+                        data-translate="pci_database_add_show_command"
+                        data-ng-click="$ctrl.trackAndGoToCommand()"
+                    ></a>
+                </div>
             </oui-tile>
         </div>
     </div>
