@@ -8,6 +8,8 @@ import { getShellClient, setShellClient } from './shell';
 
 defineApplicationVersion(__VERSION__);
 
+// test pour la qa
+
 useShellClient('dedicated')
   .then((client) => {
     if (!isTopLevelApplication()) {
