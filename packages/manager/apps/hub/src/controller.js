@@ -9,6 +9,8 @@ export default class HubController {
     this.isAccountSidebarVisible = false;
   }
 
+  // génération d'une staging pour l'application hub
+
   async $onInit() {
     this.isAccountSidebarVisible = await this.shell.ux.isAccountSidebarVisible();
   }
