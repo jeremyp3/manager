@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { useCallback, Suspense, useEffect } from 'react';
 
 import { Environment } from '@ovh-ux/manager-config';
 import LegacyContainer from '@/container/legacy';
@@ -30,30 +30,31 @@ export default function Container(): JSX.Element {
   const isNavReshuffle = betaVersion && useBeta;
 
   useEffect(() => {
-    if (!isLoading) {
-      const tracking = shell.getPlugin('tracking');
-      tracking.waitForConfig().then(() => {
-        if (isNavReshuffle) {
-          if (betaVersion === 1) {
-            tracking.trackMVTest({
-              test: '[product-navigation-reshuffle]',
-              waveId: 1,
-              creation: '[full-services]',
-            });
-          } else if (betaVersion === 2) {
-            tracking.trackMVTest({
-              test: '[product-navigation-reshuffle]',
-              waveId: 1,
-              creation: '[customer-services]',
-            });
-          }
-        }
-      });
-      if (isNavReshuffle) {
-        shell.getPlugin('ux').showMenuSidebar();
+    if (isLoading) {
+      return;
+    }
+    const tracking = shell.getPlugin('tracking');
+    tracking.waitForConfig().then(() => {
+      if (isNavReshuffle && [1, 2].includes(betaVersion)) {
+        tracking.trackMVTest({
+          test: '[product-navigation-reshuffle]',
+          waveId: 1,
+          creation: `[${betaVersion === 1 ? 'full' : 'customer'}-services]`,
+        });
       }
+    });
+    if (isNavReshuffle) {
+      shell.getPlugin('ux').showMenuSidebar();
     }
   }, [isLoading]);
+
+  const reduceLiveChatHandler = useCallback(() => {
+    setChatbotReduced(true);
+  }, [setChatbotReduced]);
+
+  const closeLiveChatHandler = useCallback(() => {
+    shell.getPlugin('ux').closeChatbot();
+  }, [shell]);
 
   return isLoading ? (
     <></>
@@ -74,8 +75,8 @@ export default function Container(): JSX.Element {
           subsidiary={ovhSubsidiary}
           open={chatbotOpen}
           reduced={chatbotReduced}
-          onReduce={() => setChatbotReduced(true)}
-          onClose={() => shell.getPlugin('ux').closeChatbot()}
+          onReduce={reduceLiveChatHandler}
+          onClose={closeLiveChatHandler}
           style={{ position: 'absolute' }}
         ></LiveChat>
       </ProgressProvider>

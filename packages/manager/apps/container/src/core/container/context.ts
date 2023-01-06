@@ -19,8 +19,4 @@ export type ContainerContext = {
   setChatbotReduced: (isReduced: boolean) => void;
 };
 
-const ContainerContext = createContext<ContainerContext>(
-  {} as ContainerContext,
-);
-
-export default ContainerContext;
+export default createContext<ContainerContext>({} as ContainerContext);

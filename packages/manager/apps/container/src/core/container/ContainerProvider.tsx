@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useReket } from '@ovh-ux/ovh-reket';
 
 import {
@@ -7,12 +7,10 @@ import {
   getBetaVersionFromLocalStorage,
   isBetaForced,
 } from './localStorage';
-// Note: Disabling prettier because it is not up-to-date
-// eslint-disable-next-line prettier/prettier
-import type { BetaVersion, ContainerContext as ContainerContextType} from './context';
+
+import type { BetaVersion } from './context';
 import ContainerContext from './context';
 import { useShell } from '@/context';
-
 
 export const BETA_V1 = 1;
 export const BETA_V2 = 2;
@@ -36,8 +34,6 @@ export const ContainerProvider = ({ children }: { children: JSX.Element }) => {
   const [useBeta, setUseBeta] = useState(false);
 
   const [isLivechatEnabled, setIsLivechatEnabled] = useState(false);
-
-  let containerContext: ContainerContextType = useContext(ContainerContext);
 
   const fetchFeatureAvailability = async () => {
     interface CurrentContextAvailability {
@@ -151,7 +147,7 @@ export const ContainerProvider = ({ children }: { children: JSX.Element }) => {
     });
   }, [isLivechatEnabled])
 
-  containerContext = {
+  const containerContext = {
     createBetaChoice,
     askBeta,
     betaVersion,
