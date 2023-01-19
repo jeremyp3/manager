@@ -458,6 +458,41 @@ export default class PciStoragesContainersService {
     });
   }
 
+  deleteS3Object(
+    projectId,
+    containerId,
+    objectKey,
+    containerRegion,
+    s3StorageType,
+  ) {
+    const region = containerRegion || OPENIO_DEFAULT_REGION;
+    let prefix = '';
+    if (objectKey.endsWith('.html')) prefix = '/engine/apiv6';
+    return this.$http
+      .delete(
+        `${prefix}/cloud/project/${projectId}/region/${region}/${s3StorageType}/${containerId}/object/${encodeURIComponent(
+          objectKey,
+        )}`,
+      )
+      .then(({ data }) => data);
+  }
+
+  deleteObject(projectId, container, object) {
+    if (container.s3StorageType) {
+      return this.deleteS3Object(
+        projectId,
+        container.id,
+        object.name,
+        container.region,
+        container.s3StorageType,
+      );
+    }
+    return this.requestContainer(projectId, container, {
+      method: 'DELETE',
+      file: object.name,
+    });
+  }
+
   static getFilePath(filePrefix, file) {
     let prefix = '';
     if (filePrefix) {
@@ -562,39 +597,6 @@ export default class PciStoragesContainersService {
           },
         });
       });
-  }
-
-  deleteS3Object(
-    projectId,
-    containerId,
-    objectKey,
-    containerRegion,
-    s3StorageType,
-  ) {
-    const region = containerRegion || OPENIO_DEFAULT_REGION;
-    return this.$http
-      .delete(
-        `/cloud/project/${projectId}/region/${region}/${s3StorageType}/${containerId}/object/${encodeURIComponent(
-          objectKey,
-        )}`,
-      )
-      .then(({ data }) => data);
-  }
-
-  deleteObject(projectId, container, object) {
-    if (container.s3StorageType) {
-      return this.deleteS3Object(
-        projectId,
-        container.id,
-        object.name,
-        container.region,
-        container.s3StorageType,
-      );
-    }
-    return this.requestContainer(projectId, container, {
-      method: 'DELETE',
-      file: object.name,
-    });
   }
 
   getObjectUrl(projectId, containerId, object) {
