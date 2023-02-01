@@ -64,8 +64,90 @@
 
     <div ng-if="!$ctrl.isRolesReadOnly">
         <h2 data-translate="pci_databases_users_add_roles"></h2>
+        <div class="row" ng-if="$ctrl.isAdvancedRole">
+            <div class="col-lg-6">
+                <form data-ng-disabled="$ctrl.pending">
+                    <div class="oui-field__control">
+                        <div class="oui-inline-adder mb-2">
+                            <div
+                                class="oui-inline-adder__form"
+                                data-ng-repeat="extra in $ctrl.model.selectedRoles track by $index"
+                            >
+                                <fieldset class="oui-inline-adder__fieldset">
+                                    <legend
+                                        class="ng-hide"
+                                        aria-hidden="true"
+                                        translate="pci_databases_users_add"
+                                    ></legend>
+                                    <div class="oui-inline-adder__row">
+                                        <div class="oui-inline-adder__field">
+                                            <oui-field
+                                                class="mr-md-3"
+                                                label="{{:: 'pci_databases_user_add_select_roles' | translate}}"
+                                            >
+                                                <oui-select
+                                                    disabled="$ctrl.model.selectedRoles[$index].added || $ctrl.pending"
+                                                    name="role-{{$index}}"
+                                                    id="role-{{$index}}"
+                                                    match="name"
+                                                    data-model="$ctrl.model.selectedRoles[$index].key"
+                                                    data-items="$ctrl.rolesList"
+                                                    on-change="$ctrl.onRoleChanged(modelValue, $index)"
+                                                >
+                                                </oui-select>
+                                            </oui-field>
+                                        </div>
+                                        <span class="mr-md-3 mt-md-3">@</span>
+                                        <div class="oui-inline-adder__field">
+                                            <oui-field
+                                                class="mr-md-3"
+                                                label="{{:: 'pci_databases_user_add_input_database' | translate}}"
+                                            >
+                                                <input
+                                                    data-ng-disabled="$ctrl.model.selectedRoles[$index].value.admin || $ctrl.model.selectedRoles[$index].added || $ctrl.pending"
+                                                    class="oui-input"
+                                                    name="database-{{$index}}"
+                                                    ng-model="$ctrl.model.selectedRoles[$index].value.db"
+                                                    type="text"
+                                                />
+                                            </oui-field>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <footer class="oui-inline-adder__footer">
+                                    <button
+                                        type="button"
+                                        class="oui-inline-adder__action oui-button oui-button_primary oui-button_s"
+                                        data-ng-click="$ctrl.onAddRole($index)"
+                                        data-ng-if="!$ctrl.model.selectedRoles[$index].added"
+                                        data-ng-disabled="!$ctrl.model.selectedRoles[$index].key"
+                                    >
+                                        <span
+                                            class="oui-icon oui-icon-add"
+                                            aria-hidden="true"
+                                        ></span>
+                                    </button>
+                                    <button
+                                        data-ng-disabled="$ctrl.pending"
+                                        type="button"
+                                        class="oui-inline-adder__action oui-button oui-button_primary oui-button_s"
+                                        data-ng-click="$ctrl.onRemoveRole($index)"
+                                        data-ng-if="$ctrl.model.selectedRoles[$index].added"
+                                    >
+                                        <span
+                                            class="oui-icon oui-icon-trash"
+                                        ></span>
+                                    </button>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <oui-dual-list
-            data-source="$ctrl.availableRoles"
+            ng-if="!$ctrl.isAdvancedRole"
+            data-source="$ctrl.rolesList"
             data-target="$ctrl.model.selectedRoles"
             disabled="$ctrl.isFeatureActivated('getRoles')"
             property="name"

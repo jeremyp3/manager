@@ -4,16 +4,21 @@ import { ADD_USER_FORM_RULES } from './add.constants';
 
 export default class AddUserCtrl {
   /* @ngInject */
-  constructor($translate, DatabaseService) {
+  constructor($translate, DatabaseService, $timeout) {
     this.$translate = $translate;
     this.DatabaseService = DatabaseService;
     this.inputRules = ADD_USER_FORM_RULES;
+    this.$timeout = $timeout;
     this.checkPattern = AddUserCtrl.checkPattern;
   }
 
   $onInit() {
     this.trackDashboard('users::add_a_user', 'page');
-    this.availableRoles = [...this.roles];
+    this.rolesList = AddUserCtrl.getRoles(this.roles);
+    this.isAdvancedRole = this.isFeatureActivated(
+      'isAdvancedRole',
+      this.database.engine,
+    );
     this.model = {
       username: '',
       password: '',
@@ -29,10 +34,48 @@ export default class AddUserCtrl {
     if (this.isRolesReadOnly) {
       this.model.selectedRoles = [];
     }
+    if (this.isAdvancedRole) {
+      this.addEmptyEntry();
+    }
+  }
+
+  addEmptyEntry() {
+    this.model.selectedRoles.push({});
+  }
+
+  onRoleChanged(modelValue, $index) {
+    this.model.selectedRoles[$index].key = null;
+    // reset value on field change to avoid invalid data
+    this.model.selectedRoles[$index].value = undefined;
+    this.$timeout(() => {
+      this.model.selectedRoles[$index].key = modelValue.name;
+      this.model.selectedRoles[$index].value = modelValue;
+    });
+  }
+
+  onAddRole($index) {
+    this.model.selectedRoles[$index].added = true;
+    this.model.selectedRoles.push({});
+  }
+
+  onRemoveRole($index) {
+    this.model.selectedRoles.splice($index, 1);
   }
 
   static checkPattern(value, pattern) {
     return pattern.test(value);
+  }
+
+  static getRoles(roles) {
+    const newRolesList = [];
+    roles.map((role) =>
+      newRolesList.push({
+        name: role.name.split('@')[0],
+        admin: role.name.includes('admin'),
+        db: role.name.includes('admin') ? 'admin' : '',
+      }),
+    );
+    return newRolesList;
   }
 
   getUserFromModel() {
@@ -46,7 +89,12 @@ export default class AddUserCtrl {
       user.keys = this.model.keys;
     }
     if (this.isFeatureActivated('getRoles')) {
-      user.roles = this.model.selectedRoles.map((role) => role.name);
+      user.roles = this.model.selectedRoles.map((role) => {
+        if (this.isAdvancedRole) {
+          return `${role.value.name}@${role.value.db}`;
+        }
+        return role.name;
+      });
     }
     if (this.hasGroups && this.model.group) {
       user.group = this.model.group;
