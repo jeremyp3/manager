@@ -34,32 +34,75 @@ export default class AddUserCtrl {
     if (this.isRolesReadOnly) {
       this.model.selectedRoles = [];
     }
-    if (this.isAdvancedRole) {
-      this.addEmptyEntry();
-    }
+  }
+
+  isButtonAddDisplayed($index) {
+    return !this.model.selectedRoles[$index].added;
+  }
+
+  isButtonDeleteDisplayed($index) {
+    const isFirstItem = $index === 0 && !this.model.selectedRoles[$index].added;
+    return this.model.selectedRoles[$index].added || isFirstItem;
+  }
+
+  isButtonAddEnabled($index) {
+    const isFilled =
+      this.model.selectedRoles[$index].key &&
+      (this.model.selectedRoles[$index].key.admin ||
+        this.model.selectedRoles[$index].value);
+    return isFilled && !this.processing;
+  }
+
+  isButtonDeleteEnabled($index) {
+    const isFirstItem = $index === 0 && !this.model.selectedRoles[$index].added;
+    return (
+      isFirstItem ||
+      (this.model.selectedRoles[$index].added && !this.processing)
+    );
   }
 
   addEmptyEntry() {
-    this.model.selectedRoles.push({});
+    this.getAvailableRoles();
+    if (this.availableRoles.length > 0) {
+      this.model.selectedRoles.push({});
+    }
   }
 
-  onRoleChanged(modelValue, $index) {
+  onAdvancedRoleChanged(modelValue, $index) {
     this.model.selectedRoles[$index].key = null;
     // reset value on field change to avoid invalid data
     this.model.selectedRoles[$index].value = undefined;
     this.$timeout(() => {
-      this.model.selectedRoles[$index].key = modelValue.name;
-      this.model.selectedRoles[$index].value = modelValue;
+      this.model.selectedRoles[$index].key = modelValue;
     });
   }
 
-  onAddRole($index) {
-    this.model.selectedRoles[$index].added = true;
-    this.model.selectedRoles.push({});
+  onAddAdvancedRole($index) {
+    const addedRole = this.model.selectedRoles[$index];
+    // check error
+    if (
+      !addedRole.admin &&
+      this.model.selectedRoles.filter(
+        (role) =>
+          role.key.name === addedRole.key.name &&
+          role.value === addedRole.value,
+      ).length > 1
+    ) {
+      addedRole.error = true;
+    } else {
+      addedRole.error = false;
+      this.model.selectedRoles[$index].added = true;
+      this.addEmptyEntry();
+    }
   }
 
-  onRemoveRole($index) {
+  onRemoveAdvancedRole($index) {
     this.model.selectedRoles.splice($index, 1);
+    this.getAvailableRoles();
+  }
+
+  get configuredRoles() {
+    return this.model.selectedRoles.filter((role) => role.added).length;
   }
 
   static checkPattern(value, pattern) {
@@ -78,6 +121,15 @@ export default class AddUserCtrl {
     return newRolesList;
   }
 
+  getAvailableRoles() {
+    this.availableRoles = this.rolesList.filter(
+      (role) =>
+        !this.model.selectedRoles.find(
+          (addedRole) => role.admin && addedRole.key.name === role.name,
+        ),
+    );
+  }
+
   getUserFromModel() {
     const user = {
       name: this.model.username,
@@ -89,12 +141,15 @@ export default class AddUserCtrl {
       user.keys = this.model.keys;
     }
     if (this.isFeatureActivated('getRoles')) {
-      user.roles = this.model.selectedRoles.map((role) => {
-        if (this.isAdvancedRole) {
-          return `${role.value.name}@${role.value.db}`;
-        }
-        return role.name;
-      });
+      user.roles = this.model.selectedRoles
+        .filter((role) => (this.isAdvancedRole ? role.added : true))
+        .map((role) => {
+          if (this.isAdvancedRole) {
+            const db = role.key.admin ? role.key.db : role.value;
+            return `${role.key.name}@${db}`;
+          }
+          return role.name;
+        });
     }
     if (this.hasGroups && this.model.group) {
       user.group = this.model.group;
