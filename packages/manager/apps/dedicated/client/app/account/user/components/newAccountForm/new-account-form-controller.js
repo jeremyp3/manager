@@ -281,6 +281,10 @@ export default class NewAccountFormController {
           });
           return this.$q.reject(result);
         }
+        this.atInternet.trackPage({
+          name: 'edit-profil-confirm-banner::success',
+          type: 'navigation',
+        });
         return result;
       });
 
