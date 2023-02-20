@@ -34,23 +34,12 @@ export default class AddUserCtrl {
     if (this.isRolesReadOnly) {
       this.model.selectedRoles = [];
     }
-  }
-
-  isButtonAddDisplayed($index) {
-    return !this.model.selectedRoles[$index].added;
+    this.addDisableRoleButton = true;
   }
 
   isButtonDeleteDisplayed($index) {
     const isFirstItem = $index === 0 && !this.model.selectedRoles[$index].added;
     return this.model.selectedRoles[$index].added || isFirstItem;
-  }
-
-  isButtonAddEnabled($index) {
-    const isFilled =
-      this.model.selectedRoles[$index].key &&
-      (this.model.selectedRoles[$index].key.admin ||
-        this.model.selectedRoles[$index].value);
-    return isFilled && !this.processing;
   }
 
   isButtonDeleteEnabled($index) {
@@ -74,11 +63,14 @@ export default class AddUserCtrl {
     this.model.selectedRoles[$index].value = undefined;
     this.$timeout(() => {
       this.model.selectedRoles[$index].key = modelValue;
+      this.checkDisableOrNot(this.model.selectedRoles[$index]);
     });
   }
 
-  onAddAdvancedRole($index) {
-    const addedRole = this.model.selectedRoles[$index];
+  onAddAdvancedRole() {
+    const addedRole = this.model.selectedRoles[
+      this.model.selectedRoles.length - 1
+    ];
     // check error
     if (
       !addedRole.admin &&
@@ -91,7 +83,10 @@ export default class AddUserCtrl {
       addedRole.error = true;
     } else {
       addedRole.error = false;
-      this.model.selectedRoles[$index].added = true;
+      this.model.selectedRoles[
+        this.model.selectedRoles.length - 1
+      ].added = true;
+      this.addDisableRoleButton = true;
       this.addEmptyEntry();
     }
   }
@@ -107,6 +102,14 @@ export default class AddUserCtrl {
 
   static checkPattern(value, pattern) {
     return pattern.test(value);
+  }
+
+  checkDisableOrNot(role) {
+    if (role.key.admin || role.value !== undefined) {
+      this.addDisableRoleButton = false;
+    } else {
+      this.addDisableRoleButton = true;
+    }
   }
 
   static getRoles(roles) {
@@ -125,7 +128,8 @@ export default class AddUserCtrl {
     this.availableRoles = this.rolesList.filter(
       (role) =>
         !this.model.selectedRoles.find(
-          (addedRole) => role.admin && addedRole.key.name === role.name,
+          (addedRole) =>
+            role.admin && addedRole.key && addedRole.key.name === role.name,
         ),
     );
   }

@@ -71,6 +71,10 @@
                     data-ng-if="$ctrl.model.selectedRoles.length === 0"
                     data-on-click="$ctrl.addEmptyEntry()"
                 >
+                    <span
+                        class="oui-icon oui-icon-add"
+                        aria-hidden="true"
+                    ></span>
                     <span data-translate="pci_databases_users_add_role"></span>
                 </oui-button>
                 <form
@@ -83,7 +87,10 @@
                                 class="oui-inline-adder__form"
                                 data-ng-repeat="extra in $ctrl.model.selectedRoles track by $index"
                             >
-                                <fieldset class="oui-inline-adder__fieldset">
+                                <fieldset
+                                    class="oui-inline-adder__fieldset"
+                                    data-ng-class="{ 'oui-inline-adder__form_added': $ctrl.model.selectedRoles[$index].added }"
+                                >
                                     <legend
                                         class="ng-hide"
                                         aria-hidden="true"
@@ -119,6 +126,8 @@
                                                     data-ng-if="!$ctrl.model.selectedRoles[$index].key.admin"
                                                     data-ng-disabled="$ctrl.model.selectedRoles[$index].added || $ctrl.processing"
                                                     data-ng-model="$ctrl.model.selectedRoles[$index].value"
+                                                    data-ng-change="$ctrl.checkDisableOrNot($ctrl.model.selectedRoles[$index])"
+                                                    data-required
                                                 />
                                                 <input
                                                     class="oui-input"
@@ -132,6 +141,7 @@
                                         </div>
                                     </div>
                                     <oui-message
+                                        class="px-md-3"
                                         data-type="error"
                                         data-ng-if="$ctrl.model.selectedRoles[$index].error"
                                     >
@@ -140,25 +150,15 @@
                                         ></span>
                                     </oui-message>
                                 </fieldset>
-                                <footer class="oui-inline-adder__footer">
-                                    <button
-                                        type="button"
-                                        class="oui-inline-adder__action oui-button oui-button_primary oui-button_s"
-                                        data-ng-click="$ctrl.onAddAdvancedRole($index)"
-                                        data-ng-if="$ctrl.isButtonAddDisplayed($index)"
-                                        data-ng-disabled="!$ctrl.isButtonAddEnabled($index)"
-                                    >
-                                        <span
-                                            class="oui-icon oui-icon-add"
-                                            aria-hidden="true"
-                                        ></span>
-                                    </button>
+                                <footer
+                                    class="oui-inline-adder__footer"
+                                    data-ng-class="{ 'oui-inline-adder__form_added': $ctrl.model.selectedRoles[$index].added }"
+                                >
                                     <button
                                         data-ng-disabled="!$ctrl.isButtonDeleteEnabled($index)"
                                         type="button"
                                         class="oui-inline-adder__action oui-button oui-button_primary oui-button_s"
                                         data-ng-click="$ctrl.onRemoveAdvancedRole($index)"
-                                        data-ng-if="$ctrl.isButtonDeleteDisplayed($index)"
                                     >
                                         <span
                                             class="oui-icon oui-icon-trash"
@@ -170,14 +170,37 @@
                     </div>
                 </form>
                 <div
-                    class="mb-2 text-right"
+                    class="mb-2 d-flex justify-content-between"
                     data-ng-if="$ctrl.model.selectedRoles.length > 0"
                 >
+                    <button
+                        type="button"
+                        class="oui-inline-adder__action oui-button oui-button_secondary oui-button_s"
+                        data-ng-click="$ctrl.onAddAdvancedRole()"
+                        data-ng-disabled="$ctrl.addDisableRoleButton"
+                    >
+                        <span
+                            class="oui-icon oui-icon-add"
+                            aria-hidden="true"
+                        ></span>
+                        <span
+                            data-translate="pci_databases_users_add_role"
+                        ></span>
+                    </button>
                     <span
                         data-translate="pci_databases_user_add_configured_roles"
                         data-translate-values="{nbRoles: $ctrl.configuredRoles}"
                     ></span>
                 </div>
+                <oui-message
+                    class="mt-2"
+                    data-type="warning"
+                    data-ng-if="$ctrl.model.selectedRoles.length <= 1"
+                >
+                    <span
+                        data-translate="pci_databases_user_add_error_existing"
+                    ></span>
+                </oui-message>
             </div>
         </div>
         <!-- basic roles-->
