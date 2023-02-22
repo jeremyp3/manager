@@ -9,6 +9,7 @@ import {
   COMMIT_IMPRESSION_TRACKING_DATA,
   RECOMMIT_IMPRESSION_TRACKING_DATA,
   HIDE_MRTG_FOR_SERVER_RANGES,
+  MUMBAI_DATACENTER,
 } from './dashboard.constants';
 import { NEW_RANGE } from '../details/server.constants';
 
@@ -42,7 +43,8 @@ export default class DedicatedServerDashboard {
     this.URLS = URLS;
     this.COMMIT_IMPRESSION_TRACKING_DATA = COMMIT_IMPRESSION_TRACKING_DATA;
     this.RECOMMIT_IMPRESSION_TRACKING_DATA = RECOMMIT_IMPRESSION_TRACKING_DATA;
-
+    // Disabling VMS and WeatherMap links for Mumbai DC
+    this.enableLinks = this.server.datacenter !== MUMBAI_DATACENTER;
     this.servicesStateLinks = {
       weathermap: WEATHERMAP_URL[this.user.country] || WEATHERMAP_URL.OTHERS,
       vms: this.constants.vmsUrl,

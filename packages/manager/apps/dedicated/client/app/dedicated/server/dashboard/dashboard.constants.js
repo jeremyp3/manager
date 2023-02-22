@@ -39,6 +39,8 @@ export const UPGRADE_TYPE = {
 
 export const HIDE_MRTG_FOR_SERVER_RANGES = ['scale', 'hgr'];
 
+export const MUMBAI_DATACENTER = 'YNM_1';
+
 export default {
   ELIGIBLE_FOR_UPGRADE,
   URLS,
@@ -46,4 +48,5 @@ export default {
   COMMIT_IMPRESSION_TRACKING_DATA,
   RECOMMIT_IMPRESSION_TRACKING_DATA,
   UPGRADE_TYPE,
+  MUMBAI_DATACENTER,
 };

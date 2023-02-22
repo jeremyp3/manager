@@ -383,11 +383,12 @@
                             data-icon-right="oui-icon-chevron-right"
                             data-on-click="$ctrl.onMonitoringUpdateClick()"
                         >
-                            <span translate="server_configuration_monitoring_cta_setting"></span>
+                            <span
+                                data-translate="server_configuration_monitoring_cta_setting"
+                            ></span>
                         </oui-button>
                     </oui-tile-description>
                 </oui-tile-definition>
-
 
                 <!-- No intervention -->
                 <!--
@@ -445,6 +446,7 @@
                                 <li class="oui-list__item">
                                     <a
                                         class="oui-list__link oui-button_ghost"
+                                        data-ng-if="$ctrl.enableLinks"
                                         href="{{:: $ctrl.servicesStateLinks.weathermap}}"
                                         target="_blank"
                                         rel="noopener"
@@ -465,7 +467,7 @@
                                 <li class="oui-list__item">
                                     <a
                                         class="oui-list__link oui-button_ghost"
-                                        ng-if="$ctrl.servicesStateLinks.vms"
+                                        data-ng-if="$ctrl.servicesStateLinks.vms && $ctrl.enableLinks"
                                         href="{{:: $ctrl.servicesStateLinks.vms}}"
                                         target="_blank"
                                         rel="noopener"
