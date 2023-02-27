@@ -28,7 +28,6 @@
             prevent-next="true"
             valid="$ctrl.range"
             on-focus="$ctrl.resetRangeConfiguration()"
-            on-submit="$ctrl.goToNextStep($ctrl.range.formattedName)"
         >
             <div class="row d-md-flex flex-wrap">
                 <div
@@ -126,7 +125,6 @@
             </div>
         </oui-step-form>
         <oui-step-form
-            data-ng-show="$ctrl.isEliteUpgrade || ($ctrl.range && $ctrl.constructor.isRangeElite($ctrl.range.formattedName))"
             header="{{:: 'vps_upscale_choice_configuration' | translate }}"
             editable="!$ctrl.loading.getUpscaleInformation || $ctrl.loading.performUpscale"
             description="{{:: $ctrl.isEliteUpgrade ? ('vps_upscale_change_configuration_details' | translate ) : '' }}"

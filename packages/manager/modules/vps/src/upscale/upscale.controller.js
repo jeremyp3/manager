@@ -141,10 +141,6 @@ export default class UpscaleController {
     };
   }
 
-  goToNextStep(range) {
-    this.currentIndex = UpscaleController.isRangeElite(range) ? 1 : 2;
-  }
-
   getIndicativePricing(pricings) {
     const renewPricing = this.ovhManagerProductOffersService.constructor.getUniquePricingOfCapacity(
       pricings,
