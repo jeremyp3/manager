@@ -129,7 +129,7 @@
             editable="!$ctrl.loading.getUpscaleInformation || $ctrl.loading.performUpscale"
             description="{{:: $ctrl.isEliteUpgrade ? ('vps_upscale_change_configuration_details' | translate ) : '' }}"
             prevent-next="true"
-            valid="$ctrl.constructor.isRangeEliteConfigurationComplete($ctrl.rangeConfiguration) && $ctrl.isNewPlanCodeDifferent"
+            valid="$ctrl.constructor.isRangeFlavorConfigurationComplete($ctrl.rangeConfiguration) && $ctrl.isNewPlanCodeDifferent"
         >
             <p data-translate="vps_upscale_change_configuration_indication"></p>
             <table class="table pr-5">
@@ -165,7 +165,7 @@
                                 model="$ctrl.rangeConfiguration.cores"
                                 data-ng-init="$ctrl.setValueIfUniqueChoice($ctrl.getAvailableValuesForParameter($ctrl.range.technicals, 'cpu.cores'), 'cores')"
                                 data-ng-repeat="core in $ctrl.getAvailableValuesForParameter($ctrl.range.technicals, 'cpu.cores') track by core"
-                                on-change="$ctrl.getRangeEliteConfigurationPricing()"
+                                on-change="$ctrl.getRangeFlavorConfigurationPricing()"
                                 value="core"
                             >
                                 <span
@@ -185,7 +185,7 @@
                                 name="{{:: memory }}"
                                 label="{{:: 'vps_upscale_choice_configuration_quantity' | translate:{ unit: memory } }}"
                                 data-values="[memory]"
-                                on-change="$ctrl.getRangeEliteConfigurationPricing()"
+                                on-change="$ctrl.getRangeFlavorConfigurationPricing()"
                                 variant="light"
                             >
                             </oui-select-picker>
@@ -199,7 +199,7 @@
                                 name="{{:: storage }}"
                                 label="{{:: 'vps_upscale_choice_configuration_quantity' | translate:{ unit: storage } }}"
                                 data-values="[storage]"
-                                on-change="$ctrl.getRangeEliteConfigurationPricing()"
+                                on-change="$ctrl.getRangeFlavorConfigurationPricing()"
                                 variant="light"
                             >
                             </oui-select-picker>
@@ -213,7 +213,7 @@
                                 name="{{:: bandwidth }}"
                                 label="{{:: bandwidth | bandwidth:'M':'bit' }}"
                                 data-values="[bandwidth]"
-                                on-change="$ctrl.getRangeEliteConfigurationPricing()"
+                                on-change="$ctrl.getRangeFlavorConfigurationPricing()"
                                 variant="light"
                             >
                             </oui-select-picker>

@@ -165,7 +165,7 @@ export default class UpscaleController {
     };
   }
 
-  static isRangeEliteConfigurationComplete({
+  static isRangeFlavorConfigurationComplete({
     bandwidth,
     cores,
     memory,
@@ -176,9 +176,9 @@ export default class UpscaleController {
     );
   }
 
-  getRangeEliteConfigurationPricing() {
+  getRangeFlavorConfigurationPricing() {
     if (
-      UpscaleController.isRangeEliteConfigurationComplete(
+      UpscaleController.isRangeFlavorConfigurationComplete(
         this.rangeConfiguration,
       )
     ) {
@@ -360,7 +360,7 @@ export default class UpscaleController {
       [this.rangeConfiguration[path]] = values;
     }
 
-    this.getRangeEliteConfigurationPricing();
+    this.getRangeFlavorConfigurationPricing();
   }
 
   getAvailableValuesForParameter(technicals, path) {
@@ -443,7 +443,7 @@ export default class UpscaleController {
     this.newRangeInformation = null;
     let newRangeInformation;
     if (
-      !UpscaleController.isRangeEliteConfigurationComplete(
+      !UpscaleController.isRangeFlavorConfigurationComplete(
         this.rangeConfiguration,
       )
     ) {
