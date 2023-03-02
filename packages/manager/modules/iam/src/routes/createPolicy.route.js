@@ -1,14 +1,14 @@
-import { createPolicy } from '@iam/components';
-import { asResolve, createPolicyBreadcrumb } from '@iam/resolves';
+import { createPolicy as createPolicyComponent } from '@iam/components';
+import { asResolve, createPolicyBreadcrumbResolve } from '@iam/resolves';
 
 const name = 'createPolicy';
-const resolves = [createPolicyBreadcrumb];
+const resolves = [createPolicyBreadcrumbResolve];
 
 const state = () => ({
   url: '/policy/create',
-  component: createPolicy.name,
+  component: createPolicyComponent.name,
   resolve: {
-    ...asResolve(createPolicy.resolves),
+    ...asResolve(createPolicyComponent.resolves),
     ...asResolve(resolves),
   },
 });

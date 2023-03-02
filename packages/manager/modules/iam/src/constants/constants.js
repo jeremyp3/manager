@@ -1,7 +1,13 @@
 export const ALERT_ID = 'iam_alert';
 
+export const DELETE_STATEMENT = 'Terminate';
+
 export const FEATURE = {
   MAIN: 'iam',
+};
+
+export const ENTITY = {
+  POLICY: 'policy',
 };
 
 // TODO wait for other guide specifications
@@ -53,6 +59,8 @@ export const UNAVAILABLE_STATE_NAME = 'app.account.user';
 
 export default {
   ALERT_ID,
+  DELETE_STATEMENT,
+  ENTITY,
   FEATURE,
   GUIDE,
   POLICY_NAME_PATTERN,

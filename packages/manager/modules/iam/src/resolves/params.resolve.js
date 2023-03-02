@@ -1,4 +1,4 @@
-import { cursorsType } from './types';
+import { cursorsType, uuidType } from './types';
 
 // ---------------------------------------------------------------------------------------------------- //
 
@@ -21,6 +21,28 @@ cursorsParamResolve.declaration = {
 
 // ---------------------------------------------------------------------------------------------------- //
 
+/**
+ * The Policy parameter based on the policy's id
+ * @returns {Object|null}
+ */
+export const policyParamResolve = /* @ngInject */ (
+  $transition$,
+  PolicyService,
+) => {
+  const { [policyParamResolve.key]: uuid } = $transition$.params();
+  return uuid ? PolicyService.getPolicy(uuid) : null;
+};
+
+policyParamResolve.key = 'policy';
+policyParamResolve.declaration = {
+  array: false,
+  type: uuidType,
+  value: null,
+};
+
+// ---------------------------------------------------------------------------------------------------- //
+
 export default {
   cursorsParamResolve,
+  policyParamResolve,
 };

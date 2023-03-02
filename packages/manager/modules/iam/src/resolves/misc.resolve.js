@@ -1,5 +1,7 @@
 import FeatureAvailabilityResult from '@ovh-ux/ng-ovh-feature-flipping/src/feature-availability-result.class';
-import { ALERT_ID, FEATURE } from '@iam/constants';
+
+import { ALERT_ID, ENTITY, FEATURE } from '@iam/constants';
+import { policyParamResolve } from './params.resolve';
 
 // ---------------------------------------------------------------------------------------------------- //
 
@@ -16,13 +18,33 @@ export const alertResolve = /* @ngInject */ ($translate, Alerter) => ({
     Alerter.success($translate.instant(key, values), ALERT_ID),
   error: (key, values) =>
     Alerter.error($translate.instant(key, values), ALERT_ID),
-  apiError: (key, error) => {
-    const message = error?.data?.message || error?.message || error || '';
-    return Alerter.error($translate.instant(key, { message }), ALERT_ID);
-  },
 });
 
 alertResolve.key = 'alert';
+
+// ---------------------------------------------------------------------------------------------------- //
+
+/**
+ * A polymorphic DTO
+ * The type of the entity it carries can be identified by its "type" property
+ * To add a new type :
+ * 1. Add a new entity type to the ENTITY constant
+ * 2. Add the corresponding resolve to the "resolves" array
+ * 3. Inject the corresponding resolve into the arguments
+ * 4. Make the function return the resolved data with the "data" property
+ * and the entity type with the "type" property
+ * @returns {{
+ *   data: Object,
+ *   type: string
+ * }|null}
+ */
+export const entityResolve = /* @ngInject */ (policy) => {
+  if (policy) return { data: policy, type: ENTITY.POLICY };
+  return null;
+};
+
+entityResolve.key = 'entity';
+entityResolve.resolves = [policyParamResolve];
 
 // ---------------------------------------------------------------------------------------------------- //
 
@@ -44,7 +66,6 @@ featuresResolve.key = 'features';
  * @param {string} name The state.go name
  * @param {string} params The state.go params
  * @param {boolean} reload The state.go reload option
- * @param {boolean} notify The state.go notity option
  * @param {string | { key: string, values: { [x: string]: any }}} success The success message to display
  * @param {string | { key: string, values: { [x: string]: any }}} error The error message to display
  */
@@ -73,8 +94,30 @@ goToResolve.resolves = [alertResolve];
 
 // ---------------------------------------------------------------------------------------------------- //
 
+/**
+ * Go back to the previous state
+ * @param {string} params The state.go params
+ * @param {boolean} reload The state.go reload option
+ * @param {string | { key: string, values: { [x: string]: any }}} success The success message to display
+ * @param {string | { key: string, values: { [x: string]: any }}} error The error message to display
+ */
+export const goBackResolve = /* @ngInject */ (goTo) => ({
+  params,
+  reload,
+  success,
+  error,
+} = {}) => goTo({ params, reload, success, error, name: '^' });
+
+goBackResolve.key = 'goBack';
+goBackResolve.resolves = [goToResolve];
+
+// ---------------------------------------------------------------------------------------------------- //
+
+// ---------------------------------------------------------------------------------------------------- //
+
 export default {
   alertResolve,
   featuresResolve,
+  goBackResolve,
   goToResolve,
 };

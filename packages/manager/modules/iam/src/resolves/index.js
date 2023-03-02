@@ -30,11 +30,27 @@ const asResolve = (resolves) =>
   );
 
 /**
- * Build a query string with each resolve's key property separated by a &
- * @param {Function[]} resolves
+ * Build a query string with each resolve's key property separated by a "&"
+ * @param {Function|Function[]} resolves
  * @returns {string}
  */
-const asQuery = (resolves) => resolves.map(({ key }) => key).join('&');
+const asQuery = (resolves) =>
+  (Array.isArray(resolves) ? resolves : [resolves])
+    .map(({ key }) => key)
+    .join('&');
+
+/**
+ * Build a path with each resolve's key properties and declaration's type (if any)
+ * separated by a "/"
+ * @param {Function|Function[]} resolves
+ * @returns {string}
+ */
+const asPath = (resolves) =>
+  (Array.isArray(resolves) ? resolves : [resolves])
+    .map(({ key, declaration: { type } = {} }) =>
+      type ? `{${key}:${type}}` : `:${key}`,
+    )
+    .join('/');
 
 /**
  * Build a Set where all the keys represent the key property of each resolve function
@@ -80,5 +96,5 @@ export * from './guides.resolve';
 export * from './misc.resolve';
 export * from './params.resolve';
 export * from './types';
-export { asBindings, asResolve, asQuery, asParams };
+export { asBindings, asResolve, asQuery, asPath, asParams };
 export default moduleName;

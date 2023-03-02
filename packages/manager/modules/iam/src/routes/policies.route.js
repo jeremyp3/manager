@@ -4,12 +4,14 @@ import {
   asQuery,
   asResolve,
   cursorsParamResolve,
-  nullBreadcrumbResolve,
+  noBreadcrumbResolve,
 } from '@iam/resolves';
+import deletePolicyRoute from './deletePolicy.route';
 
 const name = 'policies';
+const children = [deletePolicyRoute];
 const params = [cursorsParamResolve];
-const resolves = [nullBreadcrumbResolve];
+const resolves = [noBreadcrumbResolve];
 
 const state = () => ({
   url: `?${asQuery(params)}`,
@@ -25,5 +27,6 @@ const state = () => ({
 
 export default {
   name,
+  children,
   state,
 };
