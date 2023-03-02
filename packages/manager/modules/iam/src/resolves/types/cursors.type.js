@@ -13,12 +13,12 @@ import { isEqual } from 'lodash-es';
  *
  * /!\
  */
+// ---------------------------------------------------------------------------------------------------- //
 
 const base64 = '(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?';
 const base64RE = new RegExp(`^${base64}$`);
-
-export const cursorsType = 'cursors';
-export const cursorsPattern = new RegExp(`^[0-9]+-([0-9]+:${base64},?)*$`);
+const cursorsType = 'cursors';
+const cursorsPattern = new RegExp(`^[0-9]+-([0-9]+:${base64},?)*$`);
 
 /**
  * Encode a cursors object to a string
@@ -26,7 +26,7 @@ export const cursorsPattern = new RegExp(`^[0-9]+-([0-9]+:${base64},?)*$`);
  * @param {Object} object
  * @returns {string}
  */
-export const encodeCursors = (object) => {
+const encodeCursors = (object) => {
   const { index, ...cursors } = object;
   const entries = Object.entries(cursors)
     .map(([x, cursor]) => `${x}:${cursor}`)
@@ -40,7 +40,7 @@ export const encodeCursors = (object) => {
  * @param {string} string
  * @returns {Object}
  */
-export const decodeCursors = (string) => {
+const decodeCursors = (string) => {
   const [index, entries] = string.split('-');
   return entries.split(',').reduce(
     (map, entry) => {
@@ -56,7 +56,7 @@ export const decodeCursors = (string) => {
  * @param {Object} object
  * @returns {boolean}
  */
-export const isCursors = (object) => {
+const isCursors = (object) => {
   if (!object) return false;
   const { index, ...cursors } = object;
   return (
@@ -72,9 +72,19 @@ export const isCursors = (object) => {
  * @param {Object} cursorsB
  * @returns {boolean}
  */
-export const areCursorsEquals = (cursorsA, cursorsB) =>
+const areCursorsEquals = (cursorsA, cursorsB) =>
   cursorsA === cursorsB || isEqual(cursorsA, cursorsB);
 
+// ---------------------------------------------------------------------------------------------------- //
+
+export {
+  areCursorsEquals,
+  cursorsPattern,
+  cursorsType,
+  decodeCursors,
+  encodeCursors,
+  isCursors,
+};
 export default {
   decode: decodeCursors,
   encode: encodeCursors,

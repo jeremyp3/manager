@@ -13,7 +13,7 @@ import { policyParamResolve } from './params.resolve';
  *   apiError: (key, object, values?: { [x: string]: any }) => void
  * }}
  */
-export const alertResolve = /* @ngInject */ ($translate, Alerter) => ({
+const alertResolve = /* @ngInject */ ($translate, Alerter) => ({
   success: (key, values) =>
     Alerter.success($translate.instant(key, values), ALERT_ID),
   error: (key, values) =>
@@ -38,7 +38,7 @@ alertResolve.key = 'alert';
  *   type: string
  * }|null}
  */
-export const entityResolve = /* @ngInject */ (policy) => {
+const entityResolve = /* @ngInject */ (policy) => {
   if (policy) return { data: policy, type: ENTITY.POLICY };
   return null;
 };
@@ -52,7 +52,7 @@ entityResolve.resolves = [policyParamResolve];
  * FeatureAvailability instance based on the FEATURE constant
  * @returns {FeatureAvailabilityResult}
  */
-export const featuresResolve = /* @ngInject */ (ovhFeatureFlipping) =>
+const featuresResolve = /* @ngInject */ (ovhFeatureFlipping) =>
   ovhFeatureFlipping
     .checkFeatureAvailability(Object.values(FEATURE))
     .catch(() => new FeatureAvailabilityResult());
@@ -69,7 +69,7 @@ featuresResolve.key = 'features';
  * @param {string | { key: string, values: { [x: string]: any }}} success The success message to display
  * @param {string | { key: string, values: { [x: string]: any }}} error The error message to display
  */
-export const goToResolve = /* @ngInject */ ($state, alert) => ({
+const goToResolve = /* @ngInject */ ($state, alert) => ({
   name,
   params,
   reload,
@@ -101,7 +101,7 @@ goToResolve.resolves = [alertResolve];
  * @param {string | { key: string, values: { [x: string]: any }}} success The success message to display
  * @param {string | { key: string, values: { [x: string]: any }}} error The error message to display
  */
-export const goBackResolve = /* @ngInject */ (goTo) => ({
+const goBackResolve = /* @ngInject */ (goTo) => ({
   params,
   reload,
   success,
@@ -115,8 +115,9 @@ goBackResolve.resolves = [goToResolve];
 
 // ---------------------------------------------------------------------------------------------------- //
 
-export default {
+export {
   alertResolve,
+  entityResolve,
   featuresResolve,
   goBackResolve,
   goToResolve,

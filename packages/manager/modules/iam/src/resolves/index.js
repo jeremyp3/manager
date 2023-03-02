@@ -5,22 +5,29 @@ import types from './types';
 // ---------------------------------------------------------------------------------------------------- //
 
 /**
+ * Ensure that the passed object is an Array
+ * @param {any} object
+ * @returns {Array<any>}
+ */
+const ensureArray = (object) => (Array.isArray(object) ? object : [object]);
+
+/**
  * Build a Set where all the keys represent the key property of each resolve function
  * and the values are the one-way angular binding symbole (e.g. '<')
- * @param {Function[]} resolves
+ * @param {Function|Function[]} resolves
  * @returns {Object<string, '<'>}
  */
 const asBindings = (resolves) =>
-  resolves.reduce((map, res) => ({ ...map, [res.key]: '<' }), {});
+  ensureArray(resolves).reduce((map, res) => ({ ...map, [res.key]: '<' }), {});
 
 /**
  * Build a Set where all the keys represent the key property of each resolve function
  * and the values are the resolve function itself
- * @param {Function[]} resolves
+ * @param {Function|Function[]} resolves
  * @returns {Object<string, function>}
  */
 const asResolve = (resolves) =>
-  resolves.reduce(
+  ensureArray(resolves).reduce(
     (map, res) => ({
       ...map,
       ...asResolve(res.resolves ?? []),
@@ -35,7 +42,7 @@ const asResolve = (resolves) =>
  * @returns {string}
  */
 const asQuery = (resolves) =>
-  (Array.isArray(resolves) ? resolves : [resolves])
+  ensureArray(resolves)
     .map(({ key }) => key)
     .join('&');
 
@@ -46,7 +53,7 @@ const asQuery = (resolves) =>
  * @returns {string}
  */
 const asPath = (resolves) =>
-  (Array.isArray(resolves) ? resolves : [resolves])
+  ensureArray(resolves)
     .map(({ key, declaration: { type } = {} }) =>
       type ? `{${key}:${type}}` : `:${key}`,
     )
@@ -56,11 +63,11 @@ const asPath = (resolves) =>
  * Build a Set where all the keys represent the key property of each resolve function
  * and the values are the resolve's declaration object
  * @see https://ui-router.github.io/ng1/docs/latest/interfaces/params.paramdeclaration.html
- * @param {Function[]} resolves
+ * @param {Function|Function[]} resolves
  * @returns {Object<string, ParamDeclaration>}
  */
 const asParams = (resolves) =>
-  resolves.reduce(
+  ensureArray(resolves).reduce(
     (map, { key, declaration, resolves: paramResolves }) => ({
       ...map,
       ...asParams(paramResolves ?? []),

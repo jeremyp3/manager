@@ -1,17 +1,17 @@
-export const ALERT_ID = 'iam_alert';
+const ALERT_ID = 'iam_alert';
 
-export const DELETE_STATEMENT = 'Terminate';
+const DELETE_STATEMENT = 'Terminate';
 
-export const FEATURE = {
+const FEATURE = {
   MAIN: 'iam',
 };
 
-export const ENTITY = {
+const ENTITY = {
   POLICY: 'policy',
 };
 
 // TODO wait for other guide specifications
-export const GUIDE = {
+const GUIDE = {
   IAM: {
     FR: 'https://docs.ovh.com/fr/customer/IAM/',
   },
@@ -53,11 +53,11 @@ GUIDE.IAM.DEFAULT = GUIDE.IAM.FR;
 GUIDE.USERS.DEFAULT = GUIDE.USERS.US;
 GUIDE.SAMLSSO.DEFAULT = GUIDE.SAMLSSO.US;
 
-export const POLICY_NAME_PATTERN = /^[a-zA-Z0-9-/_+]*$/;
+const POLICY_NAME_PATTERN = /^[a-zA-Z0-9-/_+]*$/;
 
-export const UNAVAILABLE_STATE_NAME = 'app.account.user';
+const UNAVAILABLE_STATE_NAME = 'app.account.user';
 
-export default {
+export {
   ALERT_ID,
   DELETE_STATEMENT,
   ENTITY,

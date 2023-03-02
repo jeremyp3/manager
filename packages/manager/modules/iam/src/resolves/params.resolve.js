@@ -6,7 +6,7 @@ import { cursorsType, uuidType } from './types';
  * The cursor parameter
  * @returns {string}
  */
-export const cursorsParamResolve = /* @ngInject */ ($transition$) =>
+const cursorsParamResolve = /* @ngInject */ ($transition$) =>
   $transition$.params()[cursorsParamResolve.key];
 
 cursorsParamResolve.key = 'c';
@@ -25,10 +25,7 @@ cursorsParamResolve.declaration = {
  * The Policy parameter based on the policy's id
  * @returns {Object|null}
  */
-export const policyParamResolve = /* @ngInject */ (
-  $transition$,
-  PolicyService,
-) => {
+const policyParamResolve = /* @ngInject */ ($transition$, PolicyService) => {
   const { [policyParamResolve.key]: uuid } = $transition$.params();
   return uuid ? PolicyService.getPolicy(uuid) : null;
 };
@@ -42,7 +39,4 @@ policyParamResolve.declaration = {
 
 // ---------------------------------------------------------------------------------------------------- //
 
-export default {
-  cursorsParamResolve,
-  policyParamResolve,
-};
+export { cursorsParamResolve, policyParamResolve };
