@@ -68,7 +68,7 @@ export default class PoliciesController {
       .then(({ data, cursor: { next, prev, error } }) => {
         if (error) {
           this.cursors = cursorsParamResolve.declaration.value();
-          this.alert.error('iam_policy_error_cursor');
+          this.alert.error('iam_policies_error_cursor');
           return this.getPolicies({ offset: 1, pageSize });
         }
 
@@ -86,7 +86,7 @@ export default class PoliciesController {
       })
       .catch((error) => {
         const { message } = error.data ?? {};
-        this.alert.error('iam_policy_error_data', { message });
+        this.alert.error('iam_policies_error_data', { message });
         return { data: [], meta: { totalCount: 0 } };
       });
   }

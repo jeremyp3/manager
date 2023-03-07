@@ -8,6 +8,12 @@ export default class DeleteEntityController {
   isDeleting = false;
 
   /**
+   * The NgFormController created by the template by using name="$ctrl.form"
+   * @type {NgFormController}
+   */
+  form = null;
+
+  /**
    * The statement field's ng-model, needed to activate the form validation
    * @type {string}
    */

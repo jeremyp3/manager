@@ -1,11 +1,11 @@
 <div>
     <oui-header
-        data-heading="{{ 'iam_create_policy_title' | translate }}"
-        data-description="{{ 'iam_create_policy_description' | translate }}"
+        data-heading="{{ 'iam_create_policy_header_heading' | translate }}"
+        data-description="{{ 'iam_create_policy_header_description' | translate }}"
     >
         <!-- <Guide> -->
         <oui-guide-menu
-            data-text="{{:: 'iam_policy_header_guide_text' | translate }}"
+            data-text="{{:: 'iam_create_policy_header_guide_text' | translate }}"
         >
             <oui-guide-menu-item
                 data-ng-repeat="guide in $ctrl.onboardingGuides track by $index"
@@ -18,21 +18,66 @@
         <!-- </Guide> -->
     </oui-header>
 
-    <h4 data-translate="iam_create_policy_sub_section_policy_name"></h4>
+    <!-- <Error> -->
+    <oui-message data-type="error" data-ng-if="$ctrl.hasAnyError">
+        <div data-ng-repeat="(property, error) in $ctrl.error">
+            <p data-translate="iam_create_policy_error_heading"></p>
+            <strong
+                data-translate="{{ 'iam_create_policy_form_' + property + '_heading' }}"
+            ></strong> :
+            <span data-ng-bind="error"></span>
+        </div>
+    </oui-message>
+    <!-- </Error> -->
 
-    <form novalidate name="createPolicyForm">
-        <oui-field
-            label="{{ 'iam_create_policy_field_policy_name' | translate }}"
-            size="xl"
-        >
-            <input
-                class="oui-input"
-                name="policyNameField"
-                data-type="text"
-                data-ng-model="$ctrl.policy.name"
-                data-ng-pattern="$root.IAM.POLICY_NAME_PATTERN"
-                data-required
-            />
-        </oui-field>
+    <form
+        name="$ctrl.form"
+        data-ng-submit="$ctrl.createPolicy()"
+        autocomplete="off"
+        novalidate
+    >
+        <!-- <Name> -->
+        <h4 data-translate="iam_create_policy_form_name_heading"></h4>
+        <iam-entity-name
+          data-name="name"
+          data-ng-model="$ctrl.model.name"
+          data-error-messages="{ api: $ctrl.error.name }"
+          data-required
+        ></iam-entity-name>
+        <!-- </Name> -->
+
+        <!-- <ResourceTypes> -->
+        <h4 data-translate="iam_create_policy_form_resource_type_heading"></h4>
+        <p data-translate="iam_create_policy_form_resource_type_description"></p>
+        <iam-resource-type-select
+            data-name="resourceTypes"
+            data-ng-model="$ctrl.selectedResourceTypes"
+            data-options="resourceType for resourceType in ${resourceTypes} track by resourceType"
+            data-on-error="$ctrl.showCreationError(error)"
+            data-multiple
+            data-required
+        ></iam-resource-type-select>
+        <!-- </ResourceTypes> -->
+
+        <!-- <Footer> -->
+        <div class="d-flex align-items-center">
+            <button
+                type="button"
+                class="oui-button oui-button_l oui-button_link mr-3"
+                data-ng-disabled="$ctrl.isSubmitting"
+                data-ng-click="$ctrl.cancelCreation()"
+            >
+                <span data-translate="iam_create_policy_cancel"></span>
+            </button>
+            <button
+                type="submit"
+                class="oui-button oui-button_l oui-button_primary mr-3"
+                data-ng-disabled="!$ctrl.canSubmit"
+            >
+                <span data-translate="iam_create_policy_submit"></span>
+            </button>
+            <oui-spinner data-size="s" data-ng-if="$ctrl.isSubmitting"></oui-spinner>
+        </div>
+        <!-- </Footer> -->
     </form>
 </div>

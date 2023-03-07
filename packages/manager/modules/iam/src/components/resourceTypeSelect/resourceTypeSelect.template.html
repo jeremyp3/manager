@@ -1,0 +1,39 @@
+<oui-field
+    data-ng-if="$ctrl.formattedOptions"
+    data-label="{{ 'iam_resource_type_select_label' | translate }}"
+    data-size="{{ $ctrl.size }}"
+    data-error-messages="{ required: ('iam_resource_type_select_error_required' | translate) }"
+>
+    <div class="d-flex align-items-center mb-2">
+        <select
+            data-ng-if="$ctrl.multiple"
+            class="form-control"
+            name="{{ $ctrl.name }}"
+            multiple
+            data-ng-model="$ctrl.model"
+            data-ng-change="$ctrl.onModelChanged()"
+            data-ng-options="{{ $ctrl.formattedOptions }}"
+            data-ng-required="$ctrl.required"
+        ></select>
+        <select
+            data-ng-if="!$ctrl.multiple"
+            class="form-control"
+            name="{{ $ctrl.name }}"
+            data-ng-model="$ctrl.model"
+            data-ng-change="$ctrl.onModelChanged()"
+            data-ng-options="{{ $ctrl.formattedOptions }}"
+            data-ng-required="$ctrl.required"
+        ></select>
+        <oui-spinner
+            data-ng-if="$ctrl.isInitializing"
+            class="ml-3"
+            data-size="s"
+        ></oui-spinner>
+    </div>
+    <oui-chips
+        data-ng-if="$ctrl.multiple"
+        data-items="$ctrl.chips"
+        data-on-remove="$ctrl.onChipRemoved(items)"
+        data-closable
+    ></oui-chips>
+</oui-field>

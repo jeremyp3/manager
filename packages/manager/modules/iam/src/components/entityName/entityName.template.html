@@ -1,0 +1,15 @@
+<oui-field
+    data-label="{{ $ctrl.translations.label }}"
+    data-size="{{ $ctrl.size }}"
+    data-error-messages="$ctrl.errorMessages"
+>
+    <input
+        class="oui-input"
+        name="{{ $ctrl.name }}"
+        type="text"
+        data-ng-model="$ctrl.model"
+        data-ng-change="$ctrl.onModelChanged()"
+        data-ng-pattern="$root.IAM.ENTITY_NAME_PATTERN"
+        data-ng-required="$ctrl.required"
+    />
+</oui-field>
