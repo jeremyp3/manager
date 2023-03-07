@@ -1,4 +1,5 @@
 @import 'ovh-ui-kit-bs/dist/less/bootstrap/_variables';
+@import '../index.less';
 
 .telecom-pack-migration {
   .table-comparison {
@@ -75,5 +76,97 @@
 
   .subservice-title {
     font-size: 1.5em !important;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    margin: 15px;
+
+    .meeting {
+      height: 250px;
+    }
+  }
+
+  .card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+  }
+
+  .card-title {
+    margin-bottom: 0.75rem;
+  }
+
+  .text-small {
+    font-size: 80%;
+  }
+
+  .meeting-calendar {
+    overflow-y: hidden;
+
+    &.ng-hide-animate {
+      transition: 1s ease all;
+    }
+
+    &.ng-hide-remove {
+      max-height: 0;
+      opacity: 0;
+
+      &.ng-hide-remove-active {
+        max-height: 600px;
+        opacity: 1;
+      }
+    }
+
+    &.ng-hide-add {
+      max-height: 600px;
+      opacity: 1;
+
+      &.ng-hide-add-active {
+        max-height: 0;
+        opacity: 0;
+      }
+    }
+
+    .fc-button-group {
+      button {
+        background: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
+
+    .ovh-pack-move-event {
+      .fc-content {
+        background-color: @p-700;
+        border: none;
+        margin-bottom: 2px;
+        color: white;
+        cursor: pointer;
+      }
+
+      &.selected {
+        .fc-content {
+          background-color: @p-500;
+        }
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: none;
+
+        .fc-content {
+          background-color: darken(@p-700, 12%);
+        }
+      }
+    }
   }
 }

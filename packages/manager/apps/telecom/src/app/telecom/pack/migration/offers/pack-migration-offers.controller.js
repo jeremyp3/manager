@@ -7,6 +7,8 @@ import {
   PROMO_DISPLAY,
   MODEM_LIST,
   MODEM_OPTION_NAME,
+  OFFER_XDSL,
+  OFFER_FIBER,
 } from '../pack-migration.constant';
 
 export default class TelecomPackMigrationOffersCtrl {
@@ -35,6 +37,8 @@ export default class TelecomPackMigrationOffersCtrl {
     this.PROMO_DISPLAY = PROMO_DISPLAY;
     this.MODEM_LIST = MODEM_LIST;
     this.MODEM_OPTION_NAME = MODEM_OPTION_NAME;
+    this.OFFER_XDSL = OFFER_XDSL;
+    this.OFFER_FIBER = OFFER_FIBER;
     this.process = null;
     this.loading = {
       init: true,
@@ -153,6 +157,16 @@ export default class TelecomPackMigrationOffersCtrl {
         selectedOffer.needNewModem = true;
       }
     });
+
+    // Update meeting flag if xDSL => fiber offer
+    if (
+      this.process.pack.offerDescription
+        .toLowerCase()
+        .includes(this.OFFER_XDSL) &&
+      selectedOffer.offerName.toLowerCase().includes(this.OFFER_FIBER)
+    ) {
+      set(selectedOffer, 'needMeeting', true);
+    }
 
     this.loading.init = true;
 

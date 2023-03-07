@@ -178,6 +178,23 @@ export default class TelecomPackMigrationConfirmCtrl {
     return true;
   }
 
+  getMeeting() {
+    const day = moment(
+      this.process.selectedOffer.meetingSlots.slot.startDate,
+    ).format('DD/MM/YYYY');
+    const start = moment(
+      this.process.selectedOffer.meetingSlots.slot.startDate,
+    ).format('HH:mm');
+    const end = moment(
+      this.process.selectedOffer.meetingSlots.slot.endDate,
+    ).format('HH:mm');
+    return this.$translate.instant('telecom_pack_migration_contract_meeting', {
+      day,
+      start,
+      end,
+    });
+  }
+
   /* -----  End of HELPERS  ------*/
 
   /*= ==============================
