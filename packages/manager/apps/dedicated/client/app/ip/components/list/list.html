@@ -81,6 +81,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_ip_address_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockPopover"
+                        data-oui-popover-open="displayIpBlockPopover"
+                        data-ng-mouseover="displayIpBlockPopover = true"
+                        data-ng-mouseleave="displayIpBlockPopover = false"
                     ></button>
                 </th>
                 <th scope="col">
@@ -90,6 +94,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_campus_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockCampusPopover"
+                        data-oui-popover-open="displayIpBlockCampusPopover"
+                        data-ng-mouseover="displayIpBlockCampusPopover = true"
+                        data-ng-mouseleave="displayIpBlockCampusPopover = false"
                     ></button>
                 </th>
                 <th scope="col">
@@ -99,6 +107,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_country_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockCountryPopover"
+                        data-oui-popover-open="displayIpBlockCountryPopover"
+                        data-ng-mouseover="displayIpBlockCountryPopover= true"
+                        data-ng-mouseleave="displayIpBlockCountryPopover = false"
                     ></button>
                 </th>
                 <th scope="col">
@@ -108,6 +120,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_service_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockServicePopover"
+                        data-oui-popover-open="displayIpBlockServicePopover"
+                        data-ng-mouseover="displayIpBlockServicePopover = true"
+                        data-ng-mouseleave="displayIpBlockServicePopover = false"
                     ></button>
                 </th>
                 <th scope="col">
@@ -117,6 +133,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_reverse_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockReversePopover"
+                        data-oui-popover-open="displayIpBlockReversePopover"
+                        data-ng-mouseover="displayIpBlockReversePopover = true"
+                        data-ng-mouseleave="displayIpBlockReversePopover = false"
                     ></button>
                 </th>
                 <th scope="col" data-ng-if="advancedModeFilter">
@@ -126,6 +146,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_virtual_mac_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockVirtualMacPopover"
+                        data-oui-popover-open="displayIpBlockVirtualMacPopover"
+                        data-ng-mouseover="displayIpBlockVirtualMacPopover = true"
+                        data-ng-mouseleave="displayIpBlockVirtualMacPopover = false"
                     ></button>
                 </th>
                 <th scope="col" data-ng-if="advancedModeFilter">
@@ -135,6 +159,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_mitigation_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockMitigationPopover"
+                        data-oui-popover-open="displayIpBlockMitigationPopover"
+                        data-ng-mouseover="displayIpBlockMitigationPopover = true"
+                        data-ng-mouseleave="displayIpBlockMitigationPopover = false"
                     ></button>
                 </th>
                 <th scope="col" data-ng-if="advancedModeFilter">
@@ -154,6 +182,9 @@
                         data-oui-popover-scope="$ctrl"
                         data-oui-popover-template="ip_firewall_help.html"
                         data-oui-popover-placement="top"
+                        data-oui-popover-open="displayIpBlockSecurityUrlPopover"
+                        data-ng-mouseover="displayIpBlockSecurityUrlPopover = true"
+                        data-ng-mouseleave="displayIpBlockSecurityUrlPopover = false"
                     ></button>
                 </th>
                 <th scope="col" data-ng-if="advancedModeFilter">
@@ -165,6 +196,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_game_mitigation_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockAdvanceModeFilterPopover"
+                        data-oui-popover-open="displayIpBlockAdvanceModeFilterPopover"
+                        data-ng-mouseover="displayIpBlockAdvanceModeFilterPopover = true"
+                        data-ng-mouseleave="displayIpBlockAdvanceModeFilterPopover = false"
                     ></button>
                 </th>
                 <th scope="col">
@@ -197,6 +232,10 @@
                         class="oui-popover-button"
                         data-oui-popover="{{:: 'ip_table_header_alerts_help' | translate }}"
                         data-oui-popover-placement="top"
+                        data-oui-popover-scope="displayIpBlockAlertsPopover"
+                        data-oui-popover-open="displayIpBlockAlertsPopover"
+                        data-ng-mouseover="displayIpBlockAlertsPopover = true"
+                        data-ng-mouseleave="displayIpBlockAlertsPopover = false"
                     ></button>
                 </th>
                 <th scope="col"></th>
