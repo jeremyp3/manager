@@ -16,5 +16,12 @@
     "@uirouter/angularjs": "^1.0.23",
     "angular": "^1.7.5",
     "angular-translate": "^2.18.1"
+  },
+  "resolveAlias": {
+    "@iam/components": "./src/components",
+    "@iam/constants": "./src/constants",
+    "@iam/resolves": "./src/resolves",
+    "@iam/routes": "./src/routes",
+    "@iam/services": "./src/services"
   }
 }
