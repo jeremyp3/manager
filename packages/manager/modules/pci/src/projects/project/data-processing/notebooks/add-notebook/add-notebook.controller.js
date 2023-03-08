@@ -1,5 +1,6 @@
 import animateScrollTo from 'animated-scroll-to';
 import { API_GUIDES } from '../../../project.constants';
+import { SUBMIT_JOB_API_GUIDES } from '../../data-processing.constants';
 import { nameGenerator } from '../../../../../name-generator.constant';
 import { NOTEBOOK_PRIVACY_SETTINGS } from './privacy-selector/privacy-selector.constants';
 
@@ -41,6 +42,10 @@ export default class AddNotebookCtrl {
     this.apiGuideUrl =
       API_GUIDES[this.user.ovhSubsidiary] || API_GUIDES.DEFAULT;
 
+    this.addNotebookGuideUrl =
+      SUBMIT_JOB_API_GUIDES[this.user.ovhSubsidiary] ||
+      SUBMIT_JOB_API_GUIDES.DEFAULT;
+
     this.scrollToOptions = {
       element: document.getElementsByClassName('pci-project-content')[0],
       offset: 0,
@@ -64,8 +69,12 @@ export default class AddNotebookCtrl {
    * Fetch available regions from capabilities and update binding
    */
   updateAvailableRegions() {
-    const version = this.capabilities.availableVersions.find(
-      (v) => v.name === this.state.notebookEngine.version,
+    const engine = this.capabilities.find(
+      (capability) => capability.name === this.state.notebookEngine.engine,
+    );
+    const version = engine.availableVersions.find(
+      (availableVersion) =>
+        availableVersion.name === this.state.notebookEngine.version,
     );
     this.regions = version.availableRegions.map((region) => ({
       name: region,
@@ -87,12 +96,12 @@ export default class AddNotebookCtrl {
    * @param notebookType Selected notebook type
    */
   onChangeNotebookTypeHandler(notebookType) {
-    const e = this.capabilities.availableVersions.find(
-      (o) => o.name === notebookType.version,
+    const engine = this.capabilities.find(
+      (capability) => capability.name === notebookType.engine,
     );
     this.state.notebookEngine = {
       ...notebookType,
-      templates: e.templates,
+      templates: engine.templates,
     };
     this.updateAvailableRegions();
   }
@@ -100,6 +109,14 @@ export default class AddNotebookCtrl {
   onChangeSizingHandler(selectedSizing) {
     this.state.notebookSizing.notebook = selectedSizing.notebook;
     this.state.notebookSizing.cluster = selectedSizing.cluster;
+
+    this.updatePrice();
+  }
+
+  updatePrice() {
+    this.notebookPrice = this.prices.notebook[
+      this.state.notebookSizing.notebook
+    ];
   }
 
   /**
@@ -113,30 +130,49 @@ export default class AddNotebookCtrl {
   prepareNotebookPayload() {
     const payload = {
       env: {
-        engine: this.state.notebookEngine.engine,
+        engineName: this.state.notebookEngine.engine,
         engineVersion: this.state.notebookEngine.version,
       },
       name: this.state.name,
       region: this.state.region.name,
     };
 
-    this.orderData = payload;
-
-    this.orderAPIUrl = `POST /cloud/project/${this.projectId}/dataProcessing/notebooks`;
+    this.orderPayload = {
+      orderData: payload,
+      orderAPIUrl: `POST /cloud/project/${this.projectId}/dataProcessing/notebooks`,
+      orderKeys: [],
+      apiGuideUrl: this.apiGuideUrl,
+    };
   }
 
   onAddNotebookHandler() {
     this.prepareNotebookPayload();
+    this.trackNotebooks(
+      'add-notebook::create-notebook::'.concat(
+        `${this.state.notebookSizing.notebook}`,
+      ),
+    );
 
     this.dataProcessingService
-      .createNotebook(this.projectId, this.orderData)
-      .then(({ data }) => {
-        this.atInternet.trackClick({
-          name:
-            'public-cloud::pci::projects::project::data-processing::submit-notebook::submit',
-          type: 'action',
-        });
+      .createNotebook(this.projectId, this.orderPayload.orderData)
+      .then((data) => {
+        this.trackNotebooks(
+          `add-notebook::create-notebook-validated::${this.state.notebookSizing.notebook}`,
+        );
         this.goToDashboard(data.id);
+      })
+      .catch(() => {
+        this.trackNotebooks(
+          `add-notebook::create-notebook-error::${this.state.notebookSizing.notebook}`,
+        );
       });
+  }
+
+  trackAndGoToCommand() {
+    this.trackNotebooks({
+      name: 'add-notebook::goto-api-equivalent',
+      type: 'action',
+    });
+    return this.goToCommand(this.orderPayload);
   }
 }

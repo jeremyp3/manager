@@ -245,6 +245,12 @@ export default class {
     ].includes(this.job.status);
   }
 
+  isNotebookDeleted() {
+    return !find(this.notebooks, (notebook) => {
+      return notebook.id === this.job.notebook;
+    });
+  }
+
   onSparkUIClick() {
     this.atInternet.trackClick({
       name:

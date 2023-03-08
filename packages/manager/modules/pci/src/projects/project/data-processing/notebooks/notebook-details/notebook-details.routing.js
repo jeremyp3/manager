@@ -35,6 +35,15 @@ export default /* @ngInject */ ($stateProvider) =>
             },
           );
         },
+        deleteNotebook: /* @ngInject */ ($state, projectId, notebook) => () => {
+          $state.go(
+            'pci.projects.project.data-processing.notebooks.details.delete',
+            {
+              projectId,
+              notebookId: notebook.id,
+            },
+          );
+        },
         showNotebook: /* @ngInject */ ($state, projectId, notebookId) => () =>
           $state.go(
             'pci.projects.project.data-processing.notebooks.details',
@@ -46,6 +55,9 @@ export default /* @ngInject */ ($stateProvider) =>
               reload: true,
             },
           ),
+        reloadState: /* @ngInject */ ($state) => () => {
+          $state.go($state.current, {}, { reload: true });
+        },
         openLiveCodeEditor: /* @ngInject */ ($window, notebook) => () =>
           $window.open(notebook.status.url, '_blank'),
         breadcrumb: /* @ngInject */ ($translate) =>

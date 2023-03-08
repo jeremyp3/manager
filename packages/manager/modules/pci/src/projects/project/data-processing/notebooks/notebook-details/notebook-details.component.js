@@ -12,5 +12,8 @@ export default {
     goBack: '<',
     openLiveCodeEditor: '<',
     capabilities: '<',
+    reloadState: '<',
+    trackNotebooks: '<',
+    deleteNotebook: '<',
   },
 };

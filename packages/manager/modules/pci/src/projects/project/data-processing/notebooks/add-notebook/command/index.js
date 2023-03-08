@@ -3,17 +3,18 @@ import '@uirouter/angularjs';
 import 'oclazyload';
 
 const moduleName =
-  'ovhManagerPciProjectDataProcessingNotebookQuickDeleteModalLazyLoading';
+  'ovhManagerPciProjectDataProcessingAddNotebookCommandLazyloading';
 
 angular.module(moduleName, ['ui.router', 'oc.lazyLoad']).config(
   /* @ngInject */ ($stateProvider) => {
     $stateProvider.state(
-      'pci.projects.project.data-processing.notebooks.delete.**',
+      'pci.projects.project.data-processing.notebooks.add-notebook.command.**',
       {
-        url: '/delete',
+        url: '/command',
         lazyLoad: ($transition$) => {
           const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-          return import('./delete-notebook.module').then((mod) =>
+
+          return import('./command.module').then((mod) =>
             $ocLazyLoad.inject(mod.default || mod),
           );
         },

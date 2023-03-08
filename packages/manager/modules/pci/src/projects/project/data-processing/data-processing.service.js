@@ -172,7 +172,7 @@ export default class DataProcessingService {
    */
   getNotebookCapabilities(projectId) {
     return this.$http
-      .put(`/cloud/project/${projectId}/dataProcessing/notebooks/capabilities`)
+      .get(`/cloud/project/${projectId}/dataProcessing/notebooks/capabilities`)
       .then(({ data }) => data);
   }
 
@@ -276,6 +276,24 @@ export default class DataProcessingService {
       return {
         core: prices[`data-processing-job.core.minute.consumption`],
         memory: prices[`data-processing-job.memory-gib.minute.consumption`],
+      };
+    });
+  }
+
+  /**
+   * Retrieve the data processing notebook prices from the catalog
+   * @param projectId string Id of the project
+   * @returns {Promise}
+   */
+  getNotebookPricesFromCatalog(projectId) {
+    return this.CucPriceHelper.getPrices(projectId).then((prices) => {
+      return {
+        notebook: {
+          'NB1-1':
+            prices[
+              `data-processing-spark-notebook.notebook-nb1-1.minute.consumption`
+            ],
+        },
       };
     });
   }
