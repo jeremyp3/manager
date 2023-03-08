@@ -199,6 +199,7 @@
                                 name="{{:: storage }}"
                                 label="{{:: 'vps_upscale_choice_configuration_quantity' | translate:{ unit: storage } }}"
                                 data-values="[storage]"
+                                data-disabled="$ctrl.isStorageSelectionDisabled(storage)"
                                 on-change="$ctrl.getRangeFlavorConfigurationPricing()"
                                 variant="light"
                             >

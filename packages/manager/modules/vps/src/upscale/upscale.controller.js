@@ -176,6 +176,15 @@ export default class UpscaleController {
     );
   }
 
+  isStorageSelectionDisabled(storage) {
+    const { cores, memory } = this.rangeConfiguration;
+    const rangeName = this.range.formattedName.toLowerCase();
+    const plans = this.catalog.plans.map((plan) => plan.planCode);
+    this.planCode = `vps-${rangeName}-${cores}-${memory}-${storage}`;
+
+    return !plans.includes(this.planCode);
+  }
+
   getRangeFlavorConfigurationPricing() {
     if (
       UpscaleController.isRangeFlavorConfigurationComplete(
