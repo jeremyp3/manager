@@ -12,6 +12,8 @@ import {
   BADGE_FO,
   BADGES,
   ADDITIONAL_IP,
+  VRACK,
+  PCC,
   SECURITY_URL,
   IP_COMPONENTS_LIST_TRACKING_HIT,
   PAGE_SIZE_MIN,
@@ -88,6 +90,8 @@ export default class IpListController {
 
     $scope.IP_TYPE = IP_TYPE;
     $scope.ADDITIONAL_IP = ADDITIONAL_IP;
+    $scope.VRACK = VRACK;
+    $scope.PCC = PCC;
     $scope.showBYOIPBadge = (self.badges || BADGES).includes(BADGE_BYOIP);
     $scope.showFOBadge = (self.badges || BADGES).includes(BADGE_FO);
     $scope.advancedModeFilter = true;
@@ -127,6 +131,8 @@ export default class IpListController {
         'switch-auto-mitigation': `${TRACKING_PREFIX}::switch-auto-mitigation`,
         'move-failover': `${TRACKING_PREFIX}::move-failover`,
         'delete-failover': `${TRACKING_PREFIX}::delete-failover`,
+        'delete-vrack': `${TRACKING_PREFIX}::delete-vrack`,
+        'delete-pcc': `${TRACKING_PREFIX}::delete-pcc`,
         'mac-details': `${TRACKING_PREFIX}::mac-details`,
         'mac-delete': `${TRACKING_PREFIX}::mac-delete`,
         'ip-firewall-add-rule': `${TRACKING_PREFIX}::ip::firewall::add-rule`,

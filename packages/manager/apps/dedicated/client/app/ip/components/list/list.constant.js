@@ -8,6 +8,8 @@ export const BADGE_FO = 'FO';
 export const BADGE_BYOIP = 'BYOIP';
 export const BADGES = [BADGE_FO, BADGE_BYOIP];
 export const ADDITIONAL_IP = 'Additional IP';
+export const VRACK = 'VRACK';
+export const PCC = 'PCC';
 
 export const SECURITY_URL = {
   DEFAULT:

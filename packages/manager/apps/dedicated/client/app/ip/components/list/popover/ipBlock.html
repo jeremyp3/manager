@@ -98,7 +98,33 @@
             ></button>
         </li>
 
-        <!-- IP DELETE -->
+        <!-- PCC DELETE -->
+        <li data-ng-if="ipBlock.type == PCC">
+            <button
+                type="button"
+                class="btn btn-link"
+                data-ng-click="setAction('ip/block/delete/ip-ip-block-delete', { ipBlock: ipBlock })"
+                data-oui-tooltip="{{ !ipBlock.canBeTerminated ? ('ip_impossible_delete' | translate) : '' }}"
+                data-oui-tooltip-placement="left"
+                data-ng-disabled="!ipBlock.canBeTerminated && ipBlock.version === IP_TYPE.V6"
+                data-ng-bind=":: ('ip_table_manage_delete_ipblock' | translate) + PCC"
+            ></button>
+        </li>
+
+        <!-- VRACK DELETE -->
+        <li data-ng-if="ipBlock.type == VRACK">
+            <button
+                type="button"
+                class="btn btn-link"
+                data-ng-click="setAction('ip/block/delete/ip-ip-block-delete', { ipBlock: ipBlock })"
+                data-oui-tooltip="{{ !ipBlock.canBeTerminated ? ('ip_impossible_delete' | translate) : '' }}"
+                data-oui-tooltip-placement="left"
+                data-ng-disabled="!ipBlock.canBeTerminated"
+                data-ng-bind=":: ('ip_table_manage_delete_ipblock' | translate) + VRACK"
+            ></button>
+        </li>
+
+        <!-- Additional IP DELETE -->
         <li data-ng-if="ipBlock.type == 'FAILOVER' && !ipBlock.bringYourOwnIp">
             <button
                 type="button"
