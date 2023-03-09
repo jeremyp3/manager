@@ -196,26 +196,29 @@ export default class UpscaleController {
         this.range.formattedName.toLowerCase(),
       );
 
-      this.isNewPlanCodeDifferent = this.planCode !== this.vps.model.name;
+      // this.isNewPlanCodeDifferent = this.planCode !== this.vps.model.name;
+      try {
+        const pricings = this.catalog.plans
+          .find(({ planCode }) => planCode === this.planCode)
+          .pricings.map((pricing) =>
+            UpscaleController.convertFromCatalog(pricing),
+          );
+        const renewPricing = this.getIndicativePricing(pricings);
 
-      const pricings = this.catalog.plans
-        .find(({ planCode }) => planCode === this.planCode)
-        .pricings.map((pricing) =>
-          UpscaleController.convertFromCatalog(pricing),
-        );
-
-      const renewPricing = this.getIndicativePricing(pricings);
-
-      this.rangeConfiguration.pricing = {
-        ...renewPricing,
-        currency: this.connectedUser.currency.code,
-        pricingMode: UpscaleService.convertPricingMode(
-          renewPricing.pricingMode,
-        ),
-        unit: Price.UNITS.MICROCENTS,
-        totalPrice: renewPricing.priceInUcents,
-        value: renewPricing.price.value,
-      };
+        this.rangeConfiguration.pricing = {
+          ...renewPricing,
+          currency: this.connectedUser.currency.code,
+          pricingMode: UpscaleService.convertPricingMode(
+            renewPricing.pricingMode,
+          ),
+          unit: Price.UNITS.MICROCENTS,
+          totalPrice: renewPricing.priceInUcents,
+          value: renewPricing.price.value,
+        };
+        this.formatNewRangeInformation();
+      } catch (error) {
+        this.rangeConfiguration.pricing = null;
+      }
     }
   }
 
@@ -366,8 +369,11 @@ export default class UpscaleController {
 
   setValueIfUniqueChoice(values, path) {
     if (values.length === 1) {
-      [this.rangeConfiguration[path]] = values;
+      this.rangeConfiguration[path] = values;
     }
+
+    [this.rangeConfiguration[path]] = values;
+    console.log('this.rangeConfiguration: ', this.rangeConfiguration);
 
     this.getRangeFlavorConfigurationPricing();
   }
@@ -491,6 +497,10 @@ export default class UpscaleController {
     return `vps_upscale_summary_price_${paymentType}_${
       this.defaultPaymentMethod ? 'with' : 'without'
     }_payment_method_validation`;
+  }
+
+  static isRangeDisabled(range) {
+    return range.isCurrentRange;
   }
 
   performUpscaleService() {

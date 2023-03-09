@@ -20,6 +20,7 @@
   "vps_upscale_choice_configuration_bandwidth": "Bande passante",
   "vps_upscale_choice_configuration_bandwidth_quantity": "{{ bandwidth }} Mbit/s",
   "vps_upscale_choice_configuration_validate": "Valider",
+  "vps_upscale_choice_configuration_cancel": "Annuler",
   "vps_upscale_current_model": "Modèle actuel",
   "vps_upscale_new_configuration_refresh_time": "Dès l‘acceptation de votre paiement, un délai d’environ deux heures est nécessaire pour que la nouvelle configuration soit active. Un redémarrage de votre VPS sera requis pour en bénéficier.",
   "vps_upscale_user_conditions_agreements": "Acceptation des conditions d‘utilisation",
