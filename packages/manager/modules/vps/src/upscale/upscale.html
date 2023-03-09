@@ -9,12 +9,15 @@
 </oui-message>
 
 <section id="upscaleSection" class="container-fluid mt-4 ml-4">
-    <oui-back-button on-click="$ctrl.goBack()">
-        <span
-            data-translate="{{:: $ctrl.isEliteUpgrade ? 'vps_upscale_title_change' : 'vps_upscale_title' }}"
-        ></span>
-    </oui-back-button>
+    <oui-header
+        id="vps-upscale-title"
+        data-heading="{{:: 'vps_upscale_title' |translate}}"
+    >
+    </oui-header>
+    <p data-translate="vps_upscale_change_configuration_details"></p>
 
+    <h3 class="mt-2" data-translate="vps_upscale_choice_model"></h3>
+    <p data-translate="vps_upscale_choice_model_details"></p>
     <!-- Range(flavor) selection -->
     <div class="row d-md-flex flex-wrap">
         <div
@@ -107,6 +110,8 @@
         </div>
     </div>
 
+    <h3 class="mt-2" data-translate="vps_upscale_choice_configuration"></h3>
+    <p data-translate="vps_upscale_choice_configuration_details"></p>
     <!-- Flavor configuration -->
     <div>
         <p data-translate="vps_upscale_change_configuration_indication"></p>
@@ -228,6 +233,8 @@
     </div>
 
     <!-- Order summary -->
+    <h3 class="mt-2" data-translate="vps_upscale_summary"></h3>
+    <p data-translate="vps_upscale_choice_configuration_details"></p>
     <div class="row">
         <vps-upscale-summary-configuration
             class="col-md-3"

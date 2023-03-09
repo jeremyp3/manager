@@ -42,11 +42,10 @@ export default class UpscaleController {
       this.upscaleOptions,
       this.vps.model.name,
     );
-    upscaleRanges = upscaleRanges
-      .filter(({ formattedName }) => formattedName !== RANGES.STARTER)
-      .map((range) => this.formatRange(range));
+    upscaleRanges = upscaleRanges.map((range) => this.formatRange(range));
 
     this.upscaleRanges = sortBy(upscaleRanges, 'indicativePricing.price');
+    [, this.range] = this.upscaleRanges;
 
     if (this.isEliteUpgrade) {
       this.range = this.upscaleRanges.find(({ formattedName }) =>
@@ -373,7 +372,6 @@ export default class UpscaleController {
     }
 
     [this.rangeConfiguration[path]] = values;
-    console.log('this.rangeConfiguration: ', this.rangeConfiguration);
 
     this.getRangeFlavorConfigurationPricing();
   }
