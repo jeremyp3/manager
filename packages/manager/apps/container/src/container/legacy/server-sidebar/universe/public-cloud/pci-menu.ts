@@ -282,6 +282,18 @@ export function getPciProjectMenu(
           }[region],
           external: true,
         },
+        {
+          id: 'warehouse',
+          badge: 'beta',
+          title: 'DataWarehouse',
+          feature: 'horizon',
+          href: {
+            CA: 'http://141.95.164.144/login/',
+            EU: 'http://141.95.164.144/login/',
+            US: 'http://141.95.164.144/login/',
+          }[region],
+          external: true,
+        },
       ],
     },
     {
