@@ -16,9 +16,9 @@
     </oui-header>
     <p data-translate="vps_upscale_change_configuration_details"></p>
 
+    <!-- Range(flavor) selection -->
     <h3 class="mt-2" data-translate="vps_upscale_choice_model"></h3>
     <p data-translate="vps_upscale_choice_model_details"></p>
-    <!-- Range(flavor) selection -->
     <div class="row d-md-flex flex-wrap">
         <div
             class="col-md-3 my-3"
@@ -110,9 +110,9 @@
         </div>
     </div>
 
+    <!-- Flavor configuration -->
     <h3 class="mt-2" data-translate="vps_upscale_choice_configuration"></h3>
     <p data-translate="vps_upscale_choice_configuration_details"></p>
-    <!-- Flavor configuration -->
     <div>
         <p data-translate="vps_upscale_change_configuration_indication"></p>
         <table class="table pr-5">
@@ -212,7 +212,7 @@
     </div>
 
     <!-- Order agreement -->
-    <div data-ng-if="$ctrl.order">
+    <div>
         <oui-checkbox
             model="$ctrl.agreeContracts"
             data-ng-if="$ctrl.order && $ctrl.agreements"
@@ -234,7 +234,7 @@
 
     <!-- Order summary -->
     <h3 class="mt-2" data-translate="vps_upscale_summary"></h3>
-    <p data-translate="vps_upscale_choice_configuration_details"></p>
+    <p data-translate=""></p>
     <div class="row">
         <vps-upscale-summary-configuration
             class="col-md-3"
